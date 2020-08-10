@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const router = express.Router();
 
 const mongoose = require('mongoose');
@@ -20,18 +21,21 @@ router.post('/signup', (req, res) => {
             return res.status(422).json({error: "이미 가입된 이메일입니다."});
         }
         else{
-            const user = new User({ //new user
-                name,
-                email,
-                password
-            });
-
-            user.save()
-            .then(user => {
-                res.json({message : "saved successfully"});
-            })
-            .catch(err => {
-                console.log(err);
+            bcrypt.hash(password, 12)
+            .then( hashedpassword => {
+                const user = new User({ //new user
+                    name,
+                    email,
+                    password: hashedpassword
+                });
+    
+                user.save()
+                .then(user => {
+                    res.json({message : "saved successfully"});
+                })
+                .catch(err => {
+                    console.log(err);
+                })
             })
         }
     })
