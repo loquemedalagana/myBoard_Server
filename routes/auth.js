@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/signup', (req, res) => {
-    const {name, email, password} = req.body;
+    const {name, email, password, score} = req.body;
     if(!name || !email || !password){
         return res.status(422).json({error: "please add all the fields except your SNS links"});
     }
@@ -26,9 +26,11 @@ router.post('/signup', (req, res) => {
                 const user = new User({ //new user
                     name,
                     email,
-                    password: hashedpassword
+                    password: hashedpassword,
+                    score: 0
                 });
-    
+                user.score+=10;
+                user.score+=5;
                 user.save()
                 .then(user => {
                     res.json({message : "saved successfully"});
