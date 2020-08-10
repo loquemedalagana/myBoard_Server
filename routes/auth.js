@@ -29,8 +29,8 @@ router.post('/signup', (req, res) => {
                     password: hashedpassword,
                     score: 0
                 });
-                user.score+=10;
-                user.score+=5;
+                //user.score+=10;
+                //user.score+=5;
                 user.save()
                 .then(user => {
                     res.json({message : "saved successfully"});
@@ -45,6 +45,35 @@ router.post('/signup', (req, res) => {
         console.log(err);
     }) 
     .finally(); //끝나고 무조건 실행
+});
+
+router.post('/login', (req, res) => {
+    const {email, password} = req.body;
+    if(!email || !password) {
+        return res.status(422).json({error: "please add email or password"}); //client side error
+    }
+    User.findOne({email:email})
+    .then (savedUser => {
+        if(!savedUser){
+            return res.status(422).json({error: "Invalid Email or password"});
+        }
+        bcrypt.compare(password, savedUser.password)
+        .then(doMatch => {
+            if(doMatch){
+                res.json({message : `sucessfully signed in and your score is ${savedUser.score}.`});
+            }
+            else{
+                return res.status(422).json({error: "Invalid Email or password"});
+            }
+        })
+        .catch(err => {
+            console.log(err); //server side error
+        })
+    })
+});
+
+router.post('/logout', (req, res) => {
+
 });
 
 module.exports = router;
