@@ -21,3 +21,5 @@ const userSchema = new mongoose.Schema({
 });
 
 module.exports = new mongoose.model("User", userSchema);
+
+//admin일 경우 따로 필드 추가해서 작성
