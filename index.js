@@ -8,6 +8,7 @@ const PORT = 5000;
 require('./models/user');
 //mongoose.model("User");
 
+app.use(express.json()); //순서 중요 이름 출력될라면
 app.use(require('./routes/auth'));
 
 mongoose.connect(MONGOURL,  { useNewUrlParser: true, useUnifiedTopology: true });
