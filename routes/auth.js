@@ -5,12 +5,13 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const {JWT_SECRET} = require('../keys');
+const requireLogin = require('../middleware/requireLogin');
 
 router.get('/', (req, res) => {
     res.send("express is running");
 });
 
-router.get('/protected', (req, res) => {
+router.get('/protected', requireLogin, (req, res) => {
     res.send("hello user!");
 });
 

@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../keys');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
 
 //middleware to verify token
 module.exports = (req, res, next) => {
@@ -13,6 +15,10 @@ module.exports = (req, res, next) => {
         if(err){
             return res.status(401).json({error: "you must be logged in"});
         }
-        const {_id} = payload
+        const {_id} = payload;
+        User.findById(_id).then(userdata => {
+            req.user = userdata;
+        });
+        next();
     });
 }
