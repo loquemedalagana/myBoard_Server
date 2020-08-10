@@ -16,7 +16,12 @@ const userSchema = new mongoose.Schema({
     },
     //나중에 필드 추가하기
     score: {
-        type: Number
+        type: Number,
+        default: -1
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 
