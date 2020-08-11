@@ -11,6 +11,7 @@ router.post('/createpost', requireLogin, (req, res) => {
     if(!title || !content) {
         return res.status(422).json({error: "please add all the fields"}); //client side error
     }
+    req.user.password = undefined; //보안을 위해!
     console.log(req.user);
     //res.send("okis");
     const post = new Post ({
