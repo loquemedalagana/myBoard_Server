@@ -1,3 +1,5 @@
+//로그인, 로그아웃 라우터랑 같지만 + admin조건이 추가됨
+
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../keys');
 const mongoose = require('mongoose');
