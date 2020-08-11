@@ -17,7 +17,7 @@ router.get('/protected', requireLogin, (req, res) => {
 
 router.post('/signup', (req, res) => {
     const {name, email, password, score, date} = req.body;
-    if(!name || !email || !password){
+    if(!name || !email || !password){ //나중에 필수요소 더 추가
         return res.status(422).json({error: "please add all the fields except your SNS links"});
     }
     //else res.json({message: "sucessfully posted"}); 나중에 프론트에 넘길 때 제이슨 이용
@@ -67,9 +67,9 @@ router.post('/login', (req, res) => {
         bcrypt.compare(password, savedUser.password)
         .then(doMatch => {
             if(doMatch){
-                res.json({message : `sucessfully signed in and your score is ${savedUser.score}.`});
-                //const token = jwt.sign({_id: savedUser._id}, JWT_SECRET);
-                //res.json({token});
+                //res.json({message : `sucessfully signed in and your score is ${savedUser.score}.`});
+                const token = jwt.sign({_id: savedUser._id}, JWT_SECRET);
+                res.json({token});
             }
             else{
                 return res.status(422).json({error: "Invalid Email or password"});
