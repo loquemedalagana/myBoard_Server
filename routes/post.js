@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
+const Post = mongoose.model('Post');
+
 const requireLogin = require('../middleware/requireLogin'); //나중에 관리자 페이지 따로 미들웨어 생성
 
 router.post('/createpost', requireLogin, (req, res) => {
@@ -11,7 +13,7 @@ router.post('/createpost', requireLogin, (req, res) => {
     }
     console.log(req.user);
     //res.send("okis");
-    const post = new post ({
+    const post = new Post ({
         title,
         content,
         author: req.user
