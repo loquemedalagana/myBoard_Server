@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('../keys');
 const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const User = mongoose.model('User'); //admin일 경우 따로 처리
 
 //middleware to verify token
 module.exports = (req, res, next) => {
