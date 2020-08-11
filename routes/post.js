@@ -6,6 +6,16 @@ const Post = mongoose.model('Post');
 
 const requireLogin = require('../middleware/requireLogin'); //나중에 관리자 페이지 따로 미들웨어 생성
 
+router.get('/allpost', requireLogin, (req, res) => { //로그인한 사용자만 보기가능
+    Post.find()
+    .then(posts => {
+        res.json({posts});
+    })
+    .catch(err => {
+        console.log(err);
+    })
+})
+
 router.post('/createpost', requireLogin, (req, res) => {
     const {title, content} = req.body;
     if(!title || !content) {
