@@ -18,7 +18,7 @@ module.exports = (req, res, next) => {
         const {_id} = payload;
         User.findById(_id).then(userdata => {
             req.user = userdata;
+            next(); //next호출 위치가 왜 여기로 가야하나? 기억해두기
         });
-        next();
     });
 }

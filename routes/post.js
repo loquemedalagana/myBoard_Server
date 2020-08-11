@@ -10,10 +10,18 @@ router.post('/createpost', requireLogin, (req, res) => {
         return res.status(422).json({error: "please add all the fields"}); //client side error
     }
     console.log(req.user);
-    res.send("okis");
-    // const post = new post ({
-
-    // });
+    //res.send("okis");
+    const post = new post ({
+        title,
+        content,
+        author: req.user
+    });
+    post.save().then(result => {
+        res.json({post: result});
+    })
+    .catch(err => {
+        console.log(err);
+    })
 });
 
 module.exports = router;
