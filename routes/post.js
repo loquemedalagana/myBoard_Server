@@ -8,6 +8,7 @@ const requireLogin = require('../middleware/requireLogin'); //나중에 관리�
 
 router.get('/allpost', requireLogin, (req, res) => { //로그인한 사용자만 보기가능
     Post.find()
+    .populate("author", "_id name") //선택된 필드만 노출되게
     .then(posts => {
         res.json({posts});
     })
